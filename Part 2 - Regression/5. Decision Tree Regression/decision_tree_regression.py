@@ -2,9 +2,7 @@
 
 # Se crea un arbol de decision que separa los datos en un conjunto de grupos con valores relativamente similares.
 # Al introducir un nuevo valor para predecir, dicha prediccion corresponde a la media de los valores de las
-# muestras o datos de entrenamiento pertenecientes al mismo grupo.
-
-# En ese ejemplo, se basa en dos variables independientes, y la variable dependiente se ubica en una tercera dimension
+# muestras o datos de entrenamiento pertenecientes al mismo grupo (ver video para demostracion grafica).
 
 import pandas as pd
 import numpy as np
