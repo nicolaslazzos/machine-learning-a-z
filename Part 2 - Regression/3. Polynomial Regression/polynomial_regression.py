@@ -10,6 +10,9 @@
 
 # se usa cuando hay una relacion no lineal entre la variable independiente y la dependiente
 
+# es basicamente un modelo de regresion lineal multiple en donde las variables independientes son cada una
+# de las potencias de la variable independiente en estudio
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
