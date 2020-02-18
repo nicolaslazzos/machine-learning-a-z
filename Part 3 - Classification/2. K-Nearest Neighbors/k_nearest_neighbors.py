@@ -1,12 +1,12 @@
-# LOGISTIC REGRESSION
+# K-NEAREST NEIGHBORS (K-NN)
 
-# Formula --> Ln (p/(1-p)) = b0 + (b1 * x)
+# Clasifica el nuevo dato con la clase que predomina entre los N datos (vecinos) mas cercanos, segun la distancia
+# Euclidea (pueden utilizarse otros tipos de distancias). Uno de los valores mas comunes para N es 5.
 
-# En este caso, como hablamos de clasificacion, los valores a predecir, son categorias, valores discretos, no
-# continuos como en la regresion lineal, por lo tanto, no puede usarse la linea de regresion para predecir las
-# categorias. Por eso, a la linea de regresion, se le aplica una funcion Sigmoide, con lo que obtenemos una nueva
-# funcion, que no va a predecir las categorias en si, sino la probabilidad de una muestra de pertenecer a una
-# categoria o a otra.
+# Siendo dos puntos P1 = (X1; Y1) y P2 = (X2; Y2)
+# La Distancia Euclidea entre ambos se calcula como --> sqrt((x2 - x1)^2 + (y2 - y1)^2))
+
+# Es basicamente la hipotenusa del triangulo rectangulo formado por ambos puntos
 
 import pandas as pd
 import numpy as np
@@ -36,9 +36,9 @@ X_train = sc_X.fit_transform(X_train)
 X_test = sc_X.transform(X_test)
 
 # creando y entrenando el modelo
-from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
 
-classifier = LogisticRegression(random_state=0)
+classifier = KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2)
 classifier.fit(X_train, y_train)
 
 y_pred = classifier.predict(X_test)
@@ -53,9 +53,9 @@ cm = confusion_matrix(y_test, y_pred)
 # (1;1) predicciones de la clase 1 correctas
 
 # grafica de la clasificacion (regiones de prediccion)
-# al ser un modelo de clasificacion lineal, el limite de prediccion es una linea recta
+# al ser un modelo de clasificacion NO lineal, el limite de prediccion no es una linea recta
 from utils import plot_classification
 
-plot_classification(X_train, y_train, classifier, 'Logistic Regression (Training Set)')
+plot_classification(X_train, y_train, classifier, 'K-NN (Training Set')
 
-plot_classification(X_test, y_test, classifier, 'Logistic Regression (Test Set)')
+plot_classification(X_test, y_test, classifier, 'K-NN (Test Set')
