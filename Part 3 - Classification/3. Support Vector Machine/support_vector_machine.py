@@ -12,7 +12,7 @@ dataset = pd.read_csv('Part 3 - Classification/1. Logistic Regression/Social_Net
 
 # separar las matriz de variables independientes de la variable dependiente
 
-# matriz de variables independientes (Gender and Age)
+# matriz de variables independientes (Gender and Estimated Salary)
 X = dataset.iloc[:, 2:-1].values
 
 # vector de variables dependientes
@@ -49,9 +49,9 @@ cm = confusion_matrix(y_test, y_pred)
 # (1;1) predicciones de la clase 1 correctas
 
 # grafica de la clasificacion (regiones de prediccion)
-# al ser un modelo de clasificacion NO lineal, el limite de prediccion no es una linea recta
+# al estar usando el "linear" kernel, el limite de prediccion es una linea recta
 from utils import plot_classification
 
-plot_classification(X_train, y_train, classifier, 'K-NN (Training Set')
+plot_classification(X_train, y_train, classifier, 'SVM Linear Kernel (Training Set)')
 
-plot_classification(X_test, y_test, classifier, 'K-NN (Test Set')
+plot_classification(X_test, y_test, classifier, 'SVM Linear Kernel (Test Set)')

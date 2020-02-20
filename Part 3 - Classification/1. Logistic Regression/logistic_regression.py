@@ -16,7 +16,7 @@ dataset = pd.read_csv('Part 3 - Classification/1. Logistic Regression/Social_Net
 
 # separar las matriz de variables independientes de la variable dependiente
 
-# matriz de variables independientes (Gender and Age)
+# matriz de variables independientes (Gender and Estimated Salary)
 X = dataset.iloc[:, 2:-1].values
 
 # vector de variables dependientes

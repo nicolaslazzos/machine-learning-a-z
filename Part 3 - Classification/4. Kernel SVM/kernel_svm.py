@@ -1,12 +1,13 @@
-# K-NEAREST NEIGHBORS (K-NN)
+# KERNEL SVM
 
-# Clasifica el nuevo dato con la clase que predomina entre los N datos (vecinos) mas cercanos, segun la distancia
-# Euclidea (pueden utilizarse otros tipos de distancias). Uno de los valores mas comunes para N es 5.
+# Cuando tenemos un conjunto de datos en donde las clases no pueden ser separadas de manera lineal, lo que se hace
+# es mapear ese conjunto de datos a otra dimension en donde sea posible hacer la separacion (a traves de una funcion).
+# (Ver video "Mapping to a higher dimension")
 
-# Siendo dos puntos P1 = (X1; Y1) y P2 = (X2; Y2)
-# La Distancia Euclidea entre ambos se calcula como --> sqrt((x2 - x1)^2 + (y2 - y1)^2))
-
-# Es basicamente la hipotenusa del triangulo rectangulo formado por ambos puntos
+# Tipos de Kernel (los mas comunes):
+#       - Gaussian RBF (Radial Basis Function) Kernel --> ver video "The Kernel Trick"
+#       - Sigmoid Kernel
+#       - Polynomial Kernel
 
 import pandas as pd
 import numpy as np
@@ -36,9 +37,10 @@ X_train = sc_X.fit_transform(X_train)
 X_test = sc_X.transform(X_test)
 
 # creando y entrenando el modelo
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 
-classifier = KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2)
+# Gaussian kernel
+classifier = SVC(kernel='rbf', random_state=0)
 classifier.fit(X_train, y_train)
 
 y_pred = classifier.predict(X_test)
@@ -53,9 +55,9 @@ cm = confusion_matrix(y_test, y_pred)
 # (1;1) predicciones de la clase 1 correctas
 
 # grafica de la clasificacion (regiones de prediccion)
-# al ser un modelo de clasificacion NO lineal, el limite de prediccion no es una linea recta
+# al estar usando el "rbf" kernel (Gaussian) que es no lineal, el limite de prediccion no es una linea recta
 from utils import plot_classification
 
-plot_classification(X_train, y_train, classifier, 'K-NN (Training Set)')
+plot_classification(X_train, y_train, classifier, 'SVM Gaussian Kernel (Training Set)')
 
-plot_classification(X_test, y_test, classifier, 'K-NN (Test Set)')
+plot_classification(X_test, y_test, classifier, 'SVM Gaussian Kernel (Test Set)')
