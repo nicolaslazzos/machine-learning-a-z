@@ -56,6 +56,6 @@ cm = confusion_matrix(y_test, y_pred)
 # al ser un modelo de clasificacion NO lineal, el limite de prediccion no es una linea recta
 from utils import plot_classification
 
-plot_classification(X_train, y_train, classifier, 'K-NN (Training Set)')
+plot_classification(X_train, y_train, classifier, 'K-NN (Training Set)', 'Age', 'Estimated Salary')
 
-plot_classification(X_test, y_test, classifier, 'K-NN (Test Set)')
+plot_classification(X_test, y_test, classifier, 'K-NN (Test Set)', 'Age', 'Estimated Salary')

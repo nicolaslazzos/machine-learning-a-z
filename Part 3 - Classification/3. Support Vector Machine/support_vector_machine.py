@@ -52,6 +52,6 @@ cm = confusion_matrix(y_test, y_pred)
 # al estar usando el "linear" kernel, el limite de prediccion es una linea recta
 from utils import plot_classification
 
-plot_classification(X_train, y_train, classifier, 'SVM Linear Kernel (Training Set)')
+plot_classification(X_train, y_train, classifier, 'SVM Linear Kernel (Training Set)', 'Age', 'Estimated Salary')
 
-plot_classification(X_test, y_test, classifier, 'SVM Linear Kernel (Test Set)')
+plot_classification(X_test, y_test, classifier, 'SVM Linear Kernel (Test Set)', 'Age', 'Estimated Salary')

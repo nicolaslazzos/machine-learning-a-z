@@ -58,6 +58,6 @@ cm = confusion_matrix(y_test, y_pred)
 # al estar usando el "rbf" kernel (Gaussian) que es no lineal, el limite de prediccion no es una linea recta
 from utils import plot_classification
 
-plot_classification(X_train, y_train, classifier, 'SVM Gaussian Kernel (Training Set)')
+plot_classification(X_train, y_train, classifier, 'SVM Gaussian Kernel (Training Set)', 'Age', 'Estimated Salary')
 
-plot_classification(X_test, y_test, classifier, 'SVM Gaussian Kernel (Test Set)')
+plot_classification(X_test, y_test, classifier, 'SVM Gaussian Kernel (Test Set)', 'Age', 'Estimated Salary')
