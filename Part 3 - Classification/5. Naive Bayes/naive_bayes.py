@@ -53,7 +53,6 @@ X_test = sc_X.transform(X_test)
 # creando y entrenando el modelo
 from sklearn.naive_bayes import GaussianNB
 
-# Gaussian kernel
 classifier = GaussianNB()
 classifier.fit(X_train, y_train)
 
