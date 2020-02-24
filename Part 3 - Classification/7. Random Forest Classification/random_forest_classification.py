@@ -1,11 +1,11 @@
-# DECISION TREE CALSSIFICATION
+# RANDOM FOREST CLASSIFICATION
 
-# Va dividiendo los conjuntos de datos en funcion de las distintas propiedades de manera que se tenga la mayor
-# entropia posible. Luego para cada rama se procede de la misma forma, dividiendo cada grupo hasta que ya no se
-# obtienen divisiones.
-
-# Una menor entropia, indica un grupo mas homogeneo, es decir, con elementos de la misma clase o categoria, siendo una
-# entropia de 0, indicador de que todos los elementos de ese grupo o division son de la misma categoria.
+# Es un tipo de Ensemble Learning (cuando se juntan varios algoritmos para formar uno mas robusto).
+# Lo que hace es, tomar un grupo aleatorio de muestras del training set y crear un arbol de decision en base
+# a esos puntos y repetir ese procedimiento N veces, por lo que finalmente se obtiene un conjunto de N arboles
+# de decision. Para predecir un valor, se predice el valor con cada uno de los N arboles de decision y finalmente
+# se asigna la nueva muestra a la clase que predomina entre las predicciones de los arboles, es decir, la que gana
+# por mayoria.
 
 import pandas as pd
 import numpy as np
@@ -37,10 +37,10 @@ X_train = sc_X.fit_transform(X_train)
 X_test = sc_X.transform(X_test)
 
 # creando y entrenando el modelo
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
-# Maxima profundidad del arbol limitada a 3 para evitar overfitting
-classifier = DecisionTreeClassifier(criterion='entropy', random_state=0, max_depth=3)
+# Maxima profundidad de los arboles limitada a 2 para evitar overfitting
+classifier = RandomForestClassifier(n_estimators=10, criterion='entropy', random_state=0, max_depth=2)
 classifier.fit(X_train, y_train)
 
 y_pred = classifier.predict(X_test)
@@ -57,6 +57,6 @@ cm = confusion_matrix(y_test, y_pred)
 # grafica de la clasificacion (regiones de prediccion)
 from utils import plot_classification
 
-plot_classification(X_train, y_train, classifier, 'Decision Tree Classification (Training Set)', 'Age', 'Estimated Salary')
+plot_classification(X_train, y_train, classifier, 'Random Fores Classification (Training Set)', 'Age', 'Estimated Salary')
 
-plot_classification(X_test, y_test, classifier, 'Decision Tree Classification (Test Set)', 'Age', 'Estimated Salary')
+plot_classification(X_test, y_test, classifier, 'Random Forest Classification (Test Set)', 'Age', 'Estimated Salary')
