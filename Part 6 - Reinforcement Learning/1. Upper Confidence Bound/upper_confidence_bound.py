@@ -70,7 +70,7 @@ for n in range(0, N):
 total_reward = sum(sums_of_rewards)
 
 plt.hist(ads_selected)
-plt.title('Histogram of ads selecions')
+plt.title('Histogram of ads selections')
 plt.xlabel('Ads')
 plt.ylabel('Number of Selections')
 plt.show()
