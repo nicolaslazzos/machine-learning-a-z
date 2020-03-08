@@ -39,8 +39,8 @@ dataset = pd.read_csv('Part 6 - Reinforcement Learning/1. Upper Confidence Bound
 # Implementando UCB
 import math
 
-N = 10000 # cantidad de rondas
-d = 10 # cantidad de publicidades
+N = dataset.shape[0] # cantidad de rondas
+d = dataset.shape[1] # cantidad de publicidades
 ads_selected = []
 number_of_selections = [0] * d
 sums_of_rewards = [0] * d
