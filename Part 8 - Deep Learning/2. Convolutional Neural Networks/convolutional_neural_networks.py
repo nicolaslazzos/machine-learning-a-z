@@ -78,3 +78,77 @@
 # por mas que la red haya mejorado bastante. Cabe aclarar que el Cross-Entropy es la funcion favorita para estas redes
 # pero unicamente en el caso de una clasificacion.
 
+# Implementando la CNN
+from keras.models import Sequential
+from keras.layers import Convolution2D, MaxPooling2D, Flatten, Dense
+from keras.preprocessing.image import ImageDataGenerator
+
+# Inicializando la CNN
+classifier = Sequential()
+
+# Paso 1 - Convolucion
+
+# input_shape se refiere a como debe formatear las imagenes de entrada para que sean todas iguales, el ultimo
+# parametro indica la cantidad de canales (1 en blanco y negro y 3 para imagen a color) y luego el primer y segundo
+# parametro indican las dimensiones de las matrices para cada canal (cantidad de pixeles).
+classifier.add(Convolution2D(filters=32, kernel_size=(3, 3), padding='same', input_shape=(64, 64, 3), activation='relu'))
+
+# Paso 2 - Maz Pooling
+classifier.add(MaxPooling2D(pool_size=(2, 2)))
+
+# Segunda Convolution Layer
+classifier.add(Convolution2D(filters=32, kernel_size=(3, 3), padding='same', activation='relu'))
+classifier.add(MaxPooling2D(pool_size=(2, 2)))
+
+# Paso 3 - Flattening
+classifier.add(Flatten())
+
+# Paso 4 - Full Connection (ANN)
+classifier.add(Dense(units=128, activation='relu')) # hidden layer
+
+# en este caso no usamos softmax como funcion de activacion ya que tenemos una salida binaria
+classifier.add(Dense(units=1, activation='sigmoid')) # output layer
+
+# Compilando la CNN
+classifier.compile(optimizer='Adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Entrenando la CNN
+
+# Vamos a aplicar Image Augmentation previo a entrenar la red, para asi prevenir overfitting. Lo que hace es aplicar
+# diferentes transformaciones a cada imagen para asi obtener distintas versiones de las mismas y por ende aumentar el
+# tamaño del training set o enriquecerlo y evitar el overfitting.
+
+train_datagen = ImageDataGenerator(
+        rescale=1./255, # reescala el valor de los pixeles para que este entre 0 y 1
+        shear_range=0.2, # para aplicar shears (es como una inclinacion) aleatorios
+        zoom_range=0.2, # para aplicar zooms aleatorios
+        horizontal_flip=True) # las imagenes se van a rotar horizontalmente tambien
+
+# en el test set solo hace falta reescalar los valores de los pixeles para que coincidan con los del set de
+# entrenamiento, pero no hacen falta transformaciones ya que eso era solo para un mejor entrenamiento del modelo
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+training_set = train_datagen.flow_from_directory(
+        'Part 8 - Deep Learning/2. Convolutional Neural Networks/dataset/training_set',
+        target_size=(64, 64), # tamaño de imagen que espera la CNN (especificado en la parte de convolucion)
+        batch_size=32, # cada cuantas muestras se actualizan los pesos y filtros
+        class_mode='binary') # tipo de salida
+
+test_set = test_datagen.flow_from_directory(
+        'Part 8 - Deep Learning/2. Convolutional Neural Networks/dataset/test_set',
+        target_size=(64, 64),
+        batch_size=32,
+        class_mode='binary')
+
+classifier.fit_generator(
+        training_set,
+        steps_per_epoch=8000, # cantidad de muestras en cada epoch (tamaño del training set)
+        epochs=25,
+        validation_data=test_set,
+        validation_steps=2000) # cantidad de muestras en el test set
+
+# Para mejorar el modelo, puede agregarse una segunda capa de convolucion y max pooling y/o tambien una segunda fully
+# connected layer. En el caso de agregar una segunda capaz de convolucion, el input shape no sera igual que en la
+# primera, ya que las entradas son los Pooled Feature Maps. Como Keras sabe esto, no hace falta indicar el input_shape.
+# Ademas se podria agrandar el tamaño de las imagenes de entrada para que asi la red reciba mas informacion aunque la
+# red tardaria mas en completar su entrenamiento.
