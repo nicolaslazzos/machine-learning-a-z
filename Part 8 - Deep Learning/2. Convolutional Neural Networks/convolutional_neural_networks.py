@@ -152,3 +152,26 @@ classifier.fit_generator(
 # primera, ya que las entradas son los Pooled Feature Maps. Como Keras sabe esto, no hace falta indicar el input_shape.
 # Ademas se podria agrandar el tamaño de las imagenes de entrada para que asi la red reciba mas informacion aunque la
 # red tardaria mas en completar su entrenamiento.
+
+# Guardando el modelo
+classifier.save('Part 8 - Deep Learning/2. Convolutional Neural Networks/cnn.hdf5')
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# Cargando el modelo
+from keras.models import load_model
+
+classifier = load_model('Part 8 - Deep Learning/2. Convolutional Neural Networks/cnn.hdf5')
+
+# Probando
+from keras.preprocessing.image import load_img
+import numpy as np
+
+dog_test = load_img('Part 8 - Deep Learning/2. Convolutional Neural Networks/dog-test.jpg', target_size=(64, 64))
+dog_test = np.reshape(dog_test, [1, 64, 64, 3])
+
+cat_test = load_img('Part 8 - Deep Learning/2. Convolutional Neural Networks/cat-test.jpg', target_size=(64, 64))
+cat_test = np.reshape(cat_test, [1, 64, 64, 3])
+
+y_pred_dog = classifier.predict_classes(dog_test) # 0 = cat / 1 = dog
+y_pred_cat = classifier.predict_classes(cat_test) # 0 = cat / 1 = dog
