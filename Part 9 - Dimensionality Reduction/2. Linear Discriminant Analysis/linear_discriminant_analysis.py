@@ -34,7 +34,7 @@ sc_X = StandardScaler()
 X_train = sc_X.fit_transform(X_train)
 X_test = sc_X.transform(X_test)
 
-# Dimensionality Reduction (Aplicando PCA)
+# Dimensionality Reduction (Aplicando LDA)
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 
 # seteando n_components como "None", genera todos los "principal components" para luego ver cuantos vamos a elegir
