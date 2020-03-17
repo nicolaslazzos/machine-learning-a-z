@@ -27,7 +27,7 @@ y = dataset.iloc[:, -1].values
 # separar el dataset un training set y un test set
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
 # feature scaling, o lo que es lo mismo que normalizacion
 from sklearn.preprocessing import StandardScaler
@@ -59,7 +59,7 @@ y_pred = classifier.predict(X_test)
 # confusion matrix
 from sklearn.metrics import confusion_matrix
 
-cm = confusion_matrix(y_test, y_pred) # aproximadamente 97% de precision
+cm = confusion_matrix(y_test, y_pred) # aproximadamente 97% de precision en el test set
 
 # grafica de la clasificacion (regiones de prediccion)
 # al ser un modelo de clasificacion lineal, el limite de prediccion es una linea recta
