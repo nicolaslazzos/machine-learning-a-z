@@ -9,6 +9,8 @@
 # Esto tambien permite visualizar los datos cuando el dataset tiene mas de 2 variables independientes, ya que permite
 # reducir el numero de dimensiones del dataset hasta un numero que sea posible de graficar.
 
+# https://setosa.io/ev/principal-component-analysis/
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
