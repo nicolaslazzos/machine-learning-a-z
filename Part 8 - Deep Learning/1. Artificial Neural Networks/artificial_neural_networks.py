@@ -14,7 +14,7 @@
 
 # Funcion de Activacion
 
-# Son las funciones a las que se le aplica la suma ponderara que calcula la neurona, para definir si se activa o no
+# Son las funciones a las que se le aplica la suma ponderada que calcula la neurona, para definir si se activa o no
 # la neurona, o para calcular la salida. Algunas de las mas conocidas son: Treshold (escalon), Sigmoid (ideal para el
 # calculo de probabilidades, Rectifier (rampa) y la Hiperbolic Tangent (similar a la sigmoid pero va de -1 a 1,
 # cortando en el 0)
@@ -31,6 +31,12 @@
 # Luego de que se hizo un Epoch, en base a los costos calculados por cada entrada, se calcula el costo total, y recien
 # ahi, en base a ese costo se actualizan los pesos iniciales y se inicia un nuevo ciclo. Esto se conoce como
 # Backpropagation. El objetivo es minimizar los costos. Gradient Descent se usa para el calculo de los pesos.
+
+# Formula del Costo --> C = sum((1/2) * (y_hat-y)^2)
+# Donde:
+#   - C = costo
+#   - y = valor real
+#   - y_hat = valor predicho
 
 # Epoch --> Un Epoch, es una ronda o ciclo completo de la red a traves del training set completo (deben hacerse varios
 #           para mejorar el aprendizaje de la red)
@@ -124,3 +130,58 @@ from sklearn.metrics import confusion_matrix
 
 cm = confusion_matrix(y_test, y_pred)
 # accuracy del 86% aproximadamente
+
+# Guardando el modelo
+classifier.save('Part 8 - Deep Learning/1. Artificial Neural Networks/ann.hdf5')
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# DEEP LEARNING COURSE
+
+# Cargando el modelo
+from keras.models import load_model
+
+classifier = load_model('Part 8 - Deep Learning/1. Artificial Neural Networks/ann.hdf5')
+
+'''
+Homework
+
+Use our ANN model to predict if the customer with the following informations will leave the bank: 
+    Geography: France
+    Credit Score: 600
+    Gender: Male
+    Age: 40 years old
+    Tenure: 3 years
+    Balance: $60000
+    Number of Products: 2
+    Does this customer have a credit card ? Yes
+    Is this customer an Active Member: Yes
+    Estimated Salary: $50000
+    
+So should we say goodbye to that customer ?
+'''
+
+test_sample = [[0, 0, 1, 600, 40, 3, 60000, 2, 1, 1, 50000]]
+test_sample = sc_X.transform(test_sample)
+test_sample_pred = classifier.predict(test_sample)
+test_sample_pred = (test_sample_pred > 0.5) # segun la prediccion, el cliente no va a abandonar el banco
+
+# Evaluando el modelo con k-fold cross validation
+from keras.wrappers.scikit_learn import KerasClassifier
+from sklearn.model_selection import cross_val_score
+
+def build_classifier():
+    classifier = Sequential()
+    classifier.add(Dense(units=6, input_dim=11, kernel_initializer='uniform', activation='relu'))
+    classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu'))
+    classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
+    classifier.compile(optimizer='Adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return classifier
+
+# KerasClassifier es un wrapper que nos va a permitir aplicar k-fold cross validation (que es de scikit-learn) sobre un
+# modelo de Keras
+classifier = KerasClassifier(build_fn=build_classifier, batch_size=10, epochs=100)
+
+accuracies = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10, n_jobs=-1)
+accuracies.mean() # una precision promedio del 84%
+accuracies.std() # no hay mucha desviacion entre las precisiones calculadas, lo cual es bueno
