@@ -63,7 +63,7 @@ X = dataset.iloc[:, 3:-1].values
 y = dataset.iloc[:, -1].values
 
 # encodear las variables categoricas
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 
 # se transforma cada categoria a un numero
