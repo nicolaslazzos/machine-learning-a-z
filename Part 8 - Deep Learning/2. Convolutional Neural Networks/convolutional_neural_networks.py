@@ -175,3 +175,12 @@ cat_test = np.reshape(cat_test, [1, 64, 64, 3])
 
 y_pred_dog = classifier.predict_classes(dog_test) # 0 = cat / 1 = dog
 y_pred_cat = classifier.predict_classes(cat_test) # 0 = cat / 1 = dog
+
+'''
+Homework
+
+Take a picture of your dog or your cat and use our CNN model to predict what it is.
+If you don't have a dog or a cat, no worries you can still do the Homework. I have provided in the dataset folder a new 
+subfolder called "single_prediction" that contains one image of a dog and one image of a cat. Use our CNN model to 
+predict what these images are.
+'''
