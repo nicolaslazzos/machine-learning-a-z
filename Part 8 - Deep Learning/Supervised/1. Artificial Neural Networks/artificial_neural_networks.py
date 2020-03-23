@@ -60,7 +60,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Caso de estudio --> Churn en un banco
-dataset = pd.read_csv('Part 8 - Deep Learning/1. Artificial Neural Networks/Churn_Modelling.csv')
+dataset = pd.read_csv('Part 8 - Deep Learning/Supervised/1. Artificial Neural Networks/Churn_Modelling.csv')
 
 # matriz de variables independientes
 X = dataset.iloc[:, 3:-1].values
@@ -132,7 +132,7 @@ cm = confusion_matrix(y_test, y_pred)
 # accuracy del 86% aproximadamente
 
 # Guardando el modelo
-classifier.save('Part 8 - Deep Learning/1. Artificial Neural Networks/ann.hdf5')
+classifier.save('Part 8 - Deep Learning/Supervised/1. Artificial Neural Networks/ann.hdf5')
 
 '''
 Homework
@@ -155,7 +155,7 @@ So should we say goodbye to that customer?
 # Cargando el modelo
 from keras.models import load_model
 
-classifier = load_model('Part 8 - Deep Learning/1. Artificial Neural Networks/ann.hdf5')
+classifier = load_model('Part 8 - Deep Learning/Supervised/1. Artificial Neural Networks/ann.hdf5')
 test_sample = [[0, 0, 1, 600, 40, 3, 60000, 2, 1, 1, 50000]]
 test_sample = sc_X.transform(test_sample)
 test_sample_pred = classifier.predict(test_sample)

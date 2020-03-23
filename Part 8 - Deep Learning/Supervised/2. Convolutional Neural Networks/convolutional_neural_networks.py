@@ -129,13 +129,13 @@ train_datagen = ImageDataGenerator(
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 training_set = train_datagen.flow_from_directory(
-        'Part 8 - Deep Learning/2. Convolutional Neural Networks/dataset/training_set',
+        'Part 8 - Deep Learning/Supervised/2. Convolutional Neural Networks/dataset/training_set',
         target_size=(64, 64), # tamaño de imagen que espera la CNN (especificado en la parte de convolucion)
         batch_size=32, # cada cuantas muestras se actualizan los pesos y filtros
         class_mode='binary') # tipo de salida
 
 test_set = test_datagen.flow_from_directory(
-        'Part 8 - Deep Learning/2. Convolutional Neural Networks/dataset/test_set',
+        'Part 8 - Deep Learning/Supervised/2. Convolutional Neural Networks/dataset/test_set',
         target_size=(64, 64),
         batch_size=32,
         class_mode='binary')
@@ -154,7 +154,7 @@ classifier.fit_generator(
 # red tardaria mas en completar su entrenamiento.
 
 # Guardando el modelo
-classifier.save('Part 8 - Deep Learning/2. Convolutional Neural Networks/cnn.hdf5')
+classifier.save('Part 8 - Deep Learning/Supervised/2. Convolutional Neural Networks/cnn.hdf5')
 
 '''
 Homework
@@ -168,17 +168,17 @@ predict what these images are.
 # Cargando el modelo
 from keras.models import load_model
 
-classifier = load_model('Part 8 - Deep Learning/2. Convolutional Neural Networks/cnn.hdf5')
+classifier = load_model('Part 8 - Deep Learning/Supervised/2. Convolutional Neural Networks/cnn.hdf5')
 
 from keras.preprocessing import image
 import numpy as np
 
-dog_test = image.load_img('Part 8 - Deep Learning/2. Convolutional Neural Networks/dataset/dog-test.jpg', target_size=(64, 64))
+dog_test = image.load_img('Part 8 - Deep Learning/Supervised/2. Convolutional Neural Networks/dataset/dog-test.jpg', target_size=(64, 64))
 dog_test = image.img_to_array(dog_test)
 dog_test = np.expand_dims(dog_test, axis=0)
 # dog_test = np.reshape(dog_test, [1, 64, 64, 3]) # hace lo mismo que las dos lineas de arriba juntas
 
-cat_test = image.load_img('Part 8 - Deep Learning/2. Convolutional Neural Networks/dataset/cat-test.jpg', target_size=(64, 64))
+cat_test = image.load_img('Part 8 - Deep Learning/Supervised/2. Convolutional Neural Networks/dataset/cat-test.jpg', target_size=(64, 64))
 cat_test = image.img_to_array(cat_test)
 cat_test = np.expand_dims(cat_test, axis=0)
 # cat_test = np.reshape(cat_test, [1, 64, 64, 3])

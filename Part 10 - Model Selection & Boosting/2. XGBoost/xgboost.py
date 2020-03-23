@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Caso de estudio --> Churn en un banco
-dataset = pd.read_csv('Part 8 - Deep Learning/1. Artificial Neural Networks/Churn_Modelling.csv')
+dataset = pd.read_csv('Part 8 - Deep Learning/Supervised/1. Artificial Neural Networks/Churn_Modelling.csv')
 
 # matriz de variables independientes
 X = dataset.iloc[:, 3:-1].values
