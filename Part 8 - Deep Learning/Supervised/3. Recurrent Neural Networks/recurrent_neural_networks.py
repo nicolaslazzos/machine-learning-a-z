@@ -111,3 +111,41 @@ regressor.fit(X_train, y_train, epochs=100, batch_size=32)
 
 # Guardando el modelo
 regressor.save('Part 8 - Deep Learning/Supervised/3. Recurrent Neural Networks/rnn.hdf5')
+
+# Cargando el modelo
+from keras.models import load_model
+
+regressor = load_model('Part 8 - Deep Learning/Supervised/3. Recurrent Neural Networks/rnn.hdf5')
+
+# Importando el test set
+dataset_test = pd.read_csv('Part 8 - Deep Learning/Supervised/3. Recurrent Neural Networks/Google_Stock_Price_Test.csv')
+real_stock_price = dataset_test.iloc[:, 1:2].values # precios reales de las acciones en el primer mes de 2017
+
+# Para predecir la tendencia de cada dia, necesitaremos los precios de los 60 dias anteriores, por eso, para predecir
+# el primer mes de 2017, iremos necesitando tanto datos del training set, como del test set, ya que necesitaremos de
+# 2016 y tambien de 2017. Para eso, los vamos a concatenar.
+dataset_total = pd.concat((dataset_train['Open'], dataset_test['Open']), axis=0)
+inputs = dataset_total[len(dataset_total)-len(dataset_test)-60:].values
+inputs = inputs.reshape(-1, 1) # para que quede como un numpy array con una columna
+inputs = scaler.transform(inputs)
+
+X_test = []
+
+for i in range(60, len(inputs)):
+    X_test.append(inputs[i-60: i, 0])
+
+X_test = np.array(X_test)
+X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
+
+# Prediciendo los valores de las acciones
+pred_stock_price = regressor.predict(X_test)
+pred_stock_price = scaler.inverse_transform(pred_stock_price)
+
+# Visualizando los resultados
+plt.plot(real_stock_price, color='red', label='Real Google Stock Price')
+plt.plot(pred_stock_price, color='blue', label='Predicted Google Stock Price')
+plt.title('Google Stock Price Prediction with Recurrent Neural Network')
+plt.xlabel('Time')
+plt.ylabel('Price')
+plt.legend()
+plt.show()
